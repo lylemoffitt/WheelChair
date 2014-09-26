@@ -12,6 +12,8 @@
 		26526FF819D47514004A5E15 /* tty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26526FF219D47514004A5E15 /* tty.cpp */; };
 		26526FFE19D47710004A5E15 /* gpio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26526FFC19D47710004A5E15 /* gpio.cpp */; };
 		2652700219D50268004A5E15 /* encoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2652700019D50268004A5E15 /* encoder.cpp */; };
+		2652700719D5DF84004A5E15 /* function_set.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2652700519D5DF84004A5E15 /* function_set.cpp */; };
+		2652700A19D5E7E7004A5E15 /* mapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2652700819D5E7E7004A5E15 /* mapper.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,6 +41,10 @@
 		2652700019D50268004A5E15 /* encoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = encoder.cpp; sourceTree = "<group>"; };
 		2652700119D50268004A5E15 /* encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = encoder.h; sourceTree = "<group>"; };
 		2652700419D51A8C004A5E15 /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		2652700519D5DF84004A5E15 /* function_set.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = function_set.cpp; sourceTree = "<group>"; };
+		2652700619D5DF84004A5E15 /* function_set.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = function_set.h; sourceTree = "<group>"; };
+		2652700819D5E7E7004A5E15 /* mapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mapper.cpp; sourceTree = "<group>"; };
+		2652700919D5E7E7004A5E15 /* mapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mapper.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +86,10 @@
 				26526FF119D47514004A5E15 /* tty.h */,
 				26526FF219D47514004A5E15 /* tty.cpp */,
 				26526FE619D472D6004A5E15 /* main.cpp */,
+				2652700819D5E7E7004A5E15 /* mapper.cpp */,
+				2652700919D5E7E7004A5E15 /* mapper.h */,
+				2652700519D5DF84004A5E15 /* function_set.cpp */,
+				2652700619D5DF84004A5E15 /* function_set.h */,
 				26526FE819D472D6004A5E15 /* WheelChair.1 */,
 			);
 			path = WheelChair;
@@ -138,6 +148,8 @@
 			files = (
 				2652700219D50268004A5E15 /* encoder.cpp in Sources */,
 				26526FF819D47514004A5E15 /* tty.cpp in Sources */,
+				2652700A19D5E7E7004A5E15 /* mapper.cpp in Sources */,
+				2652700719D5DF84004A5E15 /* function_set.cpp in Sources */,
 				26526FE719D472D6004A5E15 /* main.cpp in Sources */,
 				26526FFE19D47710004A5E15 /* gpio.cpp in Sources */,
 			);

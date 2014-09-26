@@ -12,10 +12,13 @@
 /* ************************************************************************** */
 //Settings for configuring the encoder
 /* ************************************************************************** */
+
 /// The amount of change between polls of the encoder
 typedef short delta;
 
+/// The pins for the left wheel's encoder
 const int left_pins[]   = {69, 74, 73, 72};
+/// The pins for the right wheel's encoder
 const int right_pins[]  = {66, 75, 71, 70};
 
 #define ENC_WIDTH 4
@@ -42,6 +45,9 @@ const int right_pins[]  = {66, 75, 71, 70};
 
 #define POLLING_PERIOD 0
 
-
+/* ************************************************************************** */
+//Settings for configuring the XBee TTY connection
+/* ************************************************************************** */
+#define TTY_PATH "/dev/tty01"
 
 #endif

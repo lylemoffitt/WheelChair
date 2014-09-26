@@ -36,9 +36,9 @@ encoder::encoder( encoder &_enc):
     runner(std::move(_enc.runner)),
     pins(_enc.pins),
     delta_ls(_enc.delta_ls),
-    pos(_enc.pos),
     grey_ls(_enc.grey_ls)
 {
+    pos.store(_enc.pos);
 }
 
 encoder::~encoder()
@@ -96,7 +96,7 @@ encoder::loop(const encoder::loop_opt option)
         return;
     };
     
-    runner = std::thread( &loop_f );
+    runner = std::thread( loop_f );
     return delta_ls;
 }
 

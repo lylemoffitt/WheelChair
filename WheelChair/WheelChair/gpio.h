@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Lyle Moffitt. All rights reserved.
 //
 
-#ifndef __CNC__GPIO__
-#define __CNC__GPIO__
+#ifndef __WheelChair__GPIO__
+#define __WheelChair__GPIO__
 
 #include <string>
 #include <fstream>
@@ -107,4 +107,4 @@ public:
 
 
 
-#endif /* defined(__CNC__GPIO__) */
+#endif /* defined(__WheelChair__GPIO__) */

@@ -41,6 +41,7 @@ struct init_ls : public std::vector<_type>
 
 
 
+
 /** Concatenate two things together.
  * @def CAT( a,b )
  * @param a,b Any two things. 
