@@ -1,8 +1,8 @@
 //
 //  formatting.h
-//  CNC
+//  WheelChair
 //
-//  Created by Lyle Moffitt on 6/1/14.
+//  Created by Lyle Moffitt on 9/25/14.
 //  Copyright (c) 2014 Lyle Moffitt. All rights reserved.
 //
 

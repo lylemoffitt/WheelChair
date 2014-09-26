@@ -1,8 +1,8 @@
 //
-//  GPIO.h
-//  CNC
+//  gpio.h
+//  WheelChair
 //
-//  Created by Lyle Moffitt on 6/1/14.
+//  Created by Lyle Moffitt on 9/25/14.
 //  Copyright (c) 2014 Lyle Moffitt. All rights reserved.
 //
 
@@ -10,23 +10,20 @@
 #define __CNC__GPIO__
 
 #include <string>
-#include <iostream>
 #include <fstream>
 #include <bitset>
 #include <array>
 
 #include <mutex>
 #include <atomic>
+
+
 #include "formatting.h"
+#include "config.h"
 
 //The usual system headers for read() and write()
 
-#if defined(TESTING) && !defined(BEAGLEBONE) 
-#define BASE_PATH "test_gpio/gpio"
-#else
-#define BASE_PATH "/sys/class/gpio/gpio"
-#endif//TESTING
-#define BUFF_SIZE 8
+
 
 /// A single file within a device
 class dev
@@ -83,13 +80,17 @@ public:
     /// Read the pin and set the state.
     bool get();
     
+    
+    inline explicit operator bool() const;
+    
 };
 
+#define B_WID ENC_WIDTH
 
-#define B_WID 8
-class gpio_bus : std::bitset<B_WID>    
+class gpio_bus
 {
     std::array<gpio*,B_WID>     bus;
+    std::bitset<B_WID>          val;
     
 public:
 	gpio_bus(init_ls<int> pins );
@@ -98,6 +99,7 @@ public:
     
     
     std::bitset<B_WID>          get();
+    std::bitset<B_WID>          get_mt();
     
 	void                        set(std::bitset<B_WID> value);
     

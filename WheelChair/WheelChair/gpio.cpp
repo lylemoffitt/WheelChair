@@ -1,8 +1,8 @@
 //
-//  GPIO.cpp
-//  CNC
+//  gpio.cpp
+//  WheelChair
 //
-//  Created by Lyle Moffitt on 6/1/14.
+//  Created by Lyle Moffitt on 9/25/14.
 //  Copyright (c) 2014 Lyle Moffitt. All rights reserved.
 //
 
@@ -25,6 +25,11 @@
 
 using namespace std;
 
+#if defined(TESTING) && !defined(BEAGLEBONE) 
+#define BASE_PATH "test_gpio/gpio"
+#else
+#define BASE_PATH "/sys/class/gpio/gpio"
+#endif//TESTING
 
 /* ***********************          dev             ************************* */
 
@@ -146,6 +151,12 @@ gpio::get()
 }
 
 
+gpio::operator bool() const
+{
+    return state;
+}
+
+
 /* ***********************        gpio_bus             ************************ */
 
 
@@ -155,7 +166,7 @@ gpio_bus::gpio_bus(init_ls<int> pins)
     assert(pins.size()==bus.size() && "Initializer mismatch!");
     for(int i=0; i < B_WID; ++i){
         bus[i] = new gpio(pins[i]);
-        (*this)[i] = bus[i]->get();
+        val[i] = bus[i]->get();
     }
 }
 
@@ -166,14 +177,27 @@ gpio_bus::gpio_bus(gpio_bus & g): bus(g.bus)
 std::bitset<B_WID>	
 gpio_bus::get()
 {
-    for( int i=0; i < B_WID; (*this)[i] = bus[i++]->get()  );
-    return (*this);
+    for( int i=0; i < B_WID; ++i){  val[i] = bus[i]->get();  }
+    return val;
+}
+
+std::bitset<B_WID>	
+gpio_bus::get_mt()
+{
+    std::array<thread, B_WID> t_bus;
+    for( int i=0; i < B_WID; ++i){  
+        t_bus[i] = thread( &gpio::get, &(*(bus[i])) );
+    }
+    for( int i=0; i < B_WID; ++i){  
+        t_bus[i].join();  val[i] = (bool)bus[i];
+    }
+    return val;
 }
 
 void	
 gpio_bus::set(std::bitset<B_WID> value)
 {
-    for( int i=0; i < B_WID; (*this)[i] = bus[i]->set( value[i++] ) );
+    for( int i=0; i < B_WID; ++i){  val[i] = bus[i]->set( value[i] );  }
 }
 
 
