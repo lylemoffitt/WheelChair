@@ -23,7 +23,7 @@ using namespace std;
 /* ************************     function_sig       **************************** */
 
 function_sig::function_sig():
-    name(""), args(""), desc(""), funct_t([&](param_t p)->ret_t{return -1;})
+    name(""), args(""), desc(""), funct_t([&](param_t p)->ret_t{return;})
 {
 }
 
@@ -80,7 +80,7 @@ namespace std
 bool 
 function_set::has_function(std::string  _name)
 {
-    function_sig _f ({ "","", "", [&](param_t p)->ret_t{return 0;}});
+    function_sig _f ({ "","", "", [&](param_t p)->ret_t{}});
     _f.name = _name;
     return (find(_f) != end());
 }
@@ -88,7 +88,7 @@ function_set::has_function(std::string  _name)
 function_sig
 function_set::operator[](std::string  _name)
 {
-    function_sig _f ({ "","", "", [&](param_t p)->ret_t{return 0;}});
+    function_sig _f ({ "","", "", [&](param_t p)->ret_t{}});
     _f.name = _name;
     auto foundit = find(_f);
     assert(foundit!=end() && "Function name not found.");
@@ -100,19 +100,17 @@ function_set::operator[](std::string  _name)
 }
 
 int 
-function_set::parse(std::string  args)
+function_set::parse(std::stringstream & args)
 {
-    std::stringstream ss(args);
-
-    if (args.empty()){
-        if (default_function){  default_function("");    }
+    if (args.str().empty()){
+        if (default_function){  default_function( args );  }
         return -1;
     }else{
         do{
             std::string fnct_name;
-            ss >> fnct_name;
-            (*this)[fnct_name]( ss.str() );
-        }while (!ss.str().empty()) ;
+            args >> fnct_name;
+            (*this)[fnct_name]( args );
+        }while (!args.str().empty()) ;
     }
     return 0;
 }
@@ -122,9 +120,9 @@ function_set::parse(int argc, const char * argv[])
 {
     std::stringstream ss;
     for (int i =0; i<argc; ++i) {
-        ss << argv[i];
+        ss << argv[i] << " ";
     }
-    return parse( ss.str() );
+    return parse( ss );
 }
 
 function_set::function_set() :  std::unordered_set<function_sig>
@@ -133,13 +131,15 @@ function_set::function_set() :  std::unordered_set<function_sig>
         "Print help for all functions, or for the specified one.",
         [&](param_t p)->ret_t    
         {
-            if (p.empty()) {
+            string _s;
+            p.get() >>_s;
+            if (_s.empty()) {
                 std::cout << "\nUsage: \n";
                 for (auto i = this->begin() ; i!=this->end(); i++) {
                     cerr << i->help_long();
                 }
-            }else if (this->has_function(p)) {    
-                (*this)[p].help_long();
+            }else if (this->has_function(_s)) {    
+                (*this)[_s].help_long();
             }else{
                 if (this->has_function("find")) {
                     (*this)["find"](p);
@@ -148,20 +148,20 @@ function_set::function_set() :  std::unordered_set<function_sig>
                     <<"possible options.\n";
                 }
             }
-            return 0;
         } 
     },
     {"options", "<query>",
         "Print the options for a specified function, or for all of them",
         [&](param_t p)->ret_t  
         {
-            if (!p.empty()) {   
-                (*this)[p].help_short();     return 0;
+            string _s;
+            p.get() >>_s;
+            if (!_s.empty()) {   
+                (*this)[_s].help_short();     return ;
             }else {
                 for (auto i = this->begin() ; i!=this->end(); i++) {
                     cerr << i->help_short();
                 }
-                return 0;
             }
         } 
     },
@@ -169,11 +169,15 @@ function_set::function_set() :  std::unordered_set<function_sig>
         "Find and list all matching functions.",
         [&](param_t p)->ret_t  
         {
+            string _s;
+            p.get() >> _s;
             ostringstream out;
-            for (auto i = this->begin() ; i!=this->end(); i++) {
-                std::string _low, _src=(i->text());
+            for (auto i = this->begin() ; i!=this->end(); i++) 
+            {
+                std::string _low, _src(i->text());
                 for (auto i : _src ) { _low += std::tolower(i) ;}
-                if ( _low.find(p) != std::string::npos){
+                
+                if ( _low.find(_s) != std::string::npos){
                     cout << i->help_long();
                 }
             }
@@ -182,7 +186,6 @@ function_set::function_set() :  std::unordered_set<function_sig>
             }else{
                 cout<<"\nNo such function exists.\n";
             }
-            return 0;
         } 
     },
 }) 

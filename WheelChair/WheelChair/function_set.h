@@ -11,6 +11,7 @@
 
 
 #include <string>
+#include <sstream>
 //#include <set>
 #include <functional>
 #include <unordered_set>
@@ -18,9 +19,9 @@
 
 
 /// The return type of the function binding.
-typedef int             ret_t;     
+typedef void                     ret_t;     
 /// The paramaeter type of the function binding.
-typedef std::string     param_t;   
+typedef std::reference_wrapper<std::stringstream>  param_t;   
 
 /** A function binding with a signature of the form:
  @code
@@ -150,7 +151,7 @@ struct function_set :  std::unordered_set<function_sig>
     function_sig    default_function;
     
     
-    int             parse(std::string args);
+    int             parse(std::stringstream & args);
     
     int             parse(int argc, const char * argv[]);
     

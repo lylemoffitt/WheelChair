@@ -68,7 +68,7 @@ encoder::poll(const size_t number)
     return pos;
 }
 
-std::deque<short>   const * 
+std::deque<short>  * 
 encoder::loop(const encoder::loop_opt option)
 {   //Kill it if it's currently running.
     if (delta_ls != nullptr && runner.joinable()) {
@@ -107,7 +107,7 @@ encoder::is_running() const
 }
 
 
-std::deque<delta>   const * 
+std::deque<delta>  * 
 encoder::get_list() const
 {
     return delta_ls;

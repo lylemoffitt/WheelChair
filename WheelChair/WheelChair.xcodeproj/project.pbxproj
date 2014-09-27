@@ -85,11 +85,11 @@
 				26526FFD19D47710004A5E15 /* gpio.h */,
 				26526FF119D47514004A5E15 /* tty.h */,
 				26526FF219D47514004A5E15 /* tty.cpp */,
-				26526FE619D472D6004A5E15 /* main.cpp */,
 				2652700819D5E7E7004A5E15 /* mapper.cpp */,
 				2652700919D5E7E7004A5E15 /* mapper.h */,
 				2652700519D5DF84004A5E15 /* function_set.cpp */,
 				2652700619D5DF84004A5E15 /* function_set.h */,
+				26526FE619D472D6004A5E15 /* main.cpp */,
 				26526FE819D472D6004A5E15 /* WheelChair.1 */,
 			);
 			path = WheelChair;

@@ -39,6 +39,8 @@ class encoder
     std::thread             runner;
     
     gpio_bus                pins;
+    
+    size_t                  polling_period;
 public:
     /// Constructor -- Requires that you supply the pins of the encoder
     encoder(init_ls<int> pin_ls);
@@ -65,7 +67,7 @@ public:
     /** Start/Stop the managing thread to read the encoder
      * \return      nullptr     The thread has been killed
      */
-    std::deque<delta>  const * 
+    std::deque<delta> * 
     loop(const loop_opt option = clear);
     
     /// Check if the encoder thread is currently running
@@ -73,7 +75,7 @@ public:
     is_running() const;
     
     /// Fetches the encoder's delta list
-    inline std::deque<delta> const* 
+    inline std::deque<delta> * 
     get_list() const;
     
     

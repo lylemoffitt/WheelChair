@@ -24,7 +24,7 @@
 
 namespace tty_config
 {
-	constexpr size_t BAUD =9600;
+	constexpr size_t BAUD =115200;
 	constexpr size_t pkt_lag = std::micro::den / float(BAUD);
 }
 
@@ -57,7 +57,10 @@ public:
     template <class _type>
     void        wr_(_type val)
     {
-        write(  fd, to_string(val).c_str(), to_string(val).length()  );
+        std::strstream _ss;
+        _ss << val;
+        std::string _s (_ss.str());
+        write(fd,_s.c_str(),_s.length());
         //cout<<"[DBG] "<< tty_path<<" << == "<<_s <<endl;
     }
     
