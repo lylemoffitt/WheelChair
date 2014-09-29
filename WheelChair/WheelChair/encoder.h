@@ -37,6 +37,7 @@ class encoder
     std::deque<delta>   *   delta_ls;
     
     std::thread             runner;
+    std::atomic_bool        kill_runner;
     
     gpio_bus                pins;
     
@@ -56,7 +57,7 @@ public:
         The number of times to check again if the encoder hasn't moved yet.
      */
     const short   
-    poll(const size_t number = 0);
+    poll(const size_t number = POLLING_PERIOD);
     
     
     /// Sets what action to take when re-entering \c loop()
@@ -78,7 +79,8 @@ public:
     inline std::deque<delta> * 
     get_list() const;
     
-    
+    void
+    kill_process();
     
     
     

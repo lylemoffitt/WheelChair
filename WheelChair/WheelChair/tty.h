@@ -10,7 +10,7 @@
 #define __WheelChair__tty__
 
 #include <iostream>
-#include <strstream>
+#include <sstream>
 #include <string>
 
 
@@ -57,7 +57,7 @@ public:
     template <class _type>
     void        wr_(_type val)
     {
-        std::strstream _ss;
+        std::stringstream _ss;
         _ss << val;
         std::string _s (_ss.str());
         write(fd,_s.c_str(),_s.length());

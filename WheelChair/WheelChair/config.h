@@ -43,11 +43,31 @@ const int right_pins[]  = {66, 75, 71, 70};
     "1000",/*16*/                \
 }                                \
 
+#define ENCODER_POSITIONS 16
+
 #define POLLING_PERIOD 0
+
+#define ENCODER_TURN_RATIO 53.0
 
 /* ************************************************************************** */
 //Settings for configuring the XBee TTY connection
 /* ************************************************************************** */
 #define TTY_PATH "/dev/tty01"
+
+
+
+
+/* ************************************************************************** */
+//Settings for configuring the XBee TTY connection
+/* ************************************************************************** */
+#define WHEEL_DISTANCE ( 20.0+(5.0/8.0) )
+
+#define WHEEL_DIAMETER 24.0
+
+#define PI 3.14159265359
+
+
+
+
 
 #endif

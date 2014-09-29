@@ -8,7 +8,7 @@
 
 #include "GPIO.h"
 
-#include "formatting.h"
+//#include "formatting.h"
 
 #include <unistd.h>
 #include <fcntl.h>

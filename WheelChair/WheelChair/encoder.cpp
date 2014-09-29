@@ -19,7 +19,10 @@
     #define GET( _gpio_ ) ( _gpio_.get() ) 
 #endif
 
-encoder::encoder(init_ls<int> pin_ls):pins(pin_ls)
+encoder::encoder(init_ls<int> pin_ls):
+    pins(pin_ls),
+    kill_runner(false),
+    polling_period(POLLING_PERIOD)
 {
     assert(pin_ls.size() == ENC_WIDTH && "Pin # mismatch!");
     char  _pins[(2<<ENC_WIDTH)][ENC_WIDTH+1] = ENCODER_SEQUENCE;
@@ -32,20 +35,23 @@ encoder::encoder(init_ls<int> pin_ls):pins(pin_ls)
     }
 }
 
-encoder::encoder( encoder &_enc):
+encoder::encoder(encoder &_enc):
     runner(std::move(_enc.runner)),
     pins(_enc.pins),
     delta_ls(_enc.delta_ls),
-    grey_ls(_enc.grey_ls)
+    grey_ls(_enc.grey_ls),
+    polling_period(_enc.polling_period)
 {
     pos.store(_enc.pos);
+    kill_runner.store(_enc.kill_runner);
 }
 
 encoder::~encoder()
 {
+    kill_runner=true;
+    if( runner.joinable() ){  runner.join();  }
     delta_ls->clear();
     delete delta_ls;
-    if( runner.joinable() ){  runner.join();  }
 }
 
 const short 
@@ -80,18 +86,18 @@ encoder::loop(const encoder::loop_opt option)
                     std::this_thread::yield();
                 }   break;
         }
-        delete delta_ls;
+        kill_runner=true;
         runner.join(); 
+        delete delta_ls;
         return nullptr;
     }
     delta_ls = new std::deque<short>();
-    
-    auto loop_f = [this]//lambda function to run in thread
+    kill_runner=false;
+    auto loop_f = [this]()//lambda function to run in thread
     {
-        std::bitset<B_WID>	_bits;
-        while (delta_ls!=nullptr) 
+        while (!kill_runner && delta_ls!=nullptr) 
         {   
-            delta_ls->push_back( poll( POLLING_PERIOD ) );
+            delta_ls->push_back( poll( polling_period ) );
         }
         return;
     };
@@ -102,8 +108,11 @@ encoder::loop(const encoder::loop_opt option)
 
 const bool
 encoder::is_running() const
-{
-    return ( delta_ls!=nullptr && runner.joinable() );
+{   
+    assert( ((!kill_runner)==(delta_ls!=nullptr)) && 
+            ((!kill_runner)==(runner.joinable())) &&
+            "Kill state of thread must match running state." );
+    return ( !kill_runner && delta_ls!=nullptr && runner.joinable() );
 }
 
 
@@ -113,6 +122,12 @@ encoder::get_list() const
     return delta_ls;
 }
 
+void
+encoder::kill_process()
+{
+    kill_runner=true;
+    if( runner.joinable() ){  runner.join();  }
+}
 
 
 
