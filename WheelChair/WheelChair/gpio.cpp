@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Lyle Moffitt. All rights reserved.
 //
 
-#include "GPIO.h"
+#include "gpio.h"
 
 //#include "formatting.h"
 
@@ -82,8 +82,8 @@ dev::get()
 
 /* ***********************          gpio             ************************ */
 
-gpio::gpio(u_int _number):
-    path( stringf("%s%u/",BASE_PATH,_number) ),
+gpio::gpio(unsigned number):
+    path( stringf("%s%u/",BASE_PATH,number) ),
     val(path , "value"),
     dir(path , "direction"),
     low(path , "active_low"),
@@ -93,7 +93,7 @@ gpio::gpio(u_int _number):
     dir.set( "out"  ); //Set direction outwards
     val.set( "0"    ); //Set output value to logical zero
     low.set( "1"    ); //Set gpio to active-HIGH
-    cerr<<"GPIO("<<to_string(_number)<<") constructed.\n";
+    cerr<<"GPIO("<<to_string(number)<<") constructed.\n";
     mtex.unlock();
 }
 

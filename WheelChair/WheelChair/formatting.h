@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Lyle Moffitt. All rights reserved.
 //
 
-#ifndef CNC_formatting_h
-#define CNC_formatting_h
+#ifndef WheelChair_formatting_h
+#define WheelChair_formatting_h
 
 #include <string>
 #include <cstring>
@@ -31,7 +31,6 @@ stringf( const char * format, var_t ... f_args )
 template<typename _type>
 struct init_ls : public std::vector<_type>
 {
-    
     init_ls( std::initializer_list<_type> _ls):     
     std::vector<_type>(_ls)
     {
@@ -137,4 +136,4 @@ LOUT STR( a ) " = " << a    \
 
 
 
-#endif //CNC_formatting_h
+#endif //WheelChair_formatting_h

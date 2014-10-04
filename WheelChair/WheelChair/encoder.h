@@ -36,11 +36,14 @@ class encoder
      */
     std::deque<delta>   *   delta_ls;
     
+    /// The thread handling the continuous read-update loop
     std::thread             runner;
     std::atomic_bool        kill_runner;
     
+    /// The pins to which the encoder is connected
     gpio_bus                pins;
     
+    /// The number of times to read from the bus before we accept the new number
     size_t                  polling_period;
 public:
     /// Constructor -- Requires that you supply the pins of the encoder
@@ -72,13 +75,14 @@ public:
     loop(const loop_opt option = clear);
     
     /// Check if the encoder thread is currently running
-    inline const bool    
+    const bool    
     is_running() const;
     
     /// Fetches the encoder's delta list
     inline std::deque<delta> * 
     get_list() const;
     
+    /// Kill and join the running thread
     void
     kill_process();
     

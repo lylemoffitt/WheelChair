@@ -78,13 +78,13 @@
 			isa = PBXGroup;
 			children = (
 				26526FFF19D477A7004A5E15 /* formatting.h */,
+				2652700419D51A8C004A5E15 /* config.h */,
 				2652700019D50268004A5E15 /* encoder.cpp */,
 				2652700119D50268004A5E15 /* encoder.h */,
-				2652700419D51A8C004A5E15 /* config.h */,
 				26526FFC19D47710004A5E15 /* gpio.cpp */,
 				26526FFD19D47710004A5E15 /* gpio.h */,
-				26526FF119D47514004A5E15 /* tty.h */,
 				26526FF219D47514004A5E15 /* tty.cpp */,
+				26526FF119D47514004A5E15 /* tty.h */,
 				2652700819D5E7E7004A5E15 /* mapper.cpp */,
 				2652700919D5E7E7004A5E15 /* mapper.h */,
 				2652700519D5DF84004A5E15 /* function_set.cpp */,

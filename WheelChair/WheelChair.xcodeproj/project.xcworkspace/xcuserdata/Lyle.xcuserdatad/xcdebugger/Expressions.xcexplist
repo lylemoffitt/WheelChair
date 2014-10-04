@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "function_set::parse(std::__1::basic_stringstream&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;&amp;):function_set.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "function_set::operator[](std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;):function_set.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "main:main.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "(char)*(_ss.__sb_.__str_.__r_.__first_..__l.__data_)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "operator():main.cpp">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

@@ -85,7 +85,7 @@ public:
     kill_process();
     
     /// Check if the mapping thread is currently running
-    inline const bool    
+    const bool    
     is_running() const;
     
     

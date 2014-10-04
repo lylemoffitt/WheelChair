@@ -212,6 +212,12 @@ int main(int argc, const char * argv[])
             [&](param_t p)
             {  
                 format_str.clear();
+                string arg;
+                p.get() >>  arg; 
+                assert(!arg.empty() && "Format cannot be empty");
+                format_str=arg;
+                return ;
+                
                 char _c;
                 while ((_c = p.get().get())!='^');
                 assert(_c=='^' && "Format string must begin with \'^\'");
@@ -270,11 +276,11 @@ int main(int argc, const char * argv[])
     if (!write_f)               //Assign default writing function
     {  _ss << " --write delta "; 
     }
-    
+    /*
     if (format_str.empty())     //Assign default format string
     {   _ss << " --set-format ^[%lf][%lf][%lf]^ ";
     }
-    
+    */
     if (!_ss.str().empty())     //Interpret the above assignments
     {   args_handler.parse( _ss );    
     }
@@ -287,4 +293,13 @@ int main(int argc, const char * argv[])
     
     return 0;
 }
+
+
+
+
+
+
+
+
+
 

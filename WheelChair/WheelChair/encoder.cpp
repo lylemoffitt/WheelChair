@@ -63,7 +63,7 @@ encoder::poll(const size_t number)
         if (tmp != curr) {  curr=tmp; break; }
     }
     
-    for (uint i=0; i<=(1<<ENC_WIDTH); ++i) {
+    for (unsigned i=0; i<=(1<<ENC_WIDTH); ++i) {
         if (curr == grey_ls[(pos+i)%(2<<ENC_WIDTH)]) {  
             pos = (pos+i)%(2<<ENC_WIDTH);  return 0+i;  
         }

@@ -12,6 +12,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <ratio>
 
 
 #ifndef _WIN32
@@ -32,28 +33,48 @@ namespace tty_config
 /********************    Teletype Style Device        **********************/
 class device_tty
 {
-    // The full path to the device, including its name
+    /// The full path to the device, including its name
     std::string tty_path;// == "/dev/ttyO1"
     
-    // File handle for the specific tty
+    /// File handle for the specific tty
 	int     fd;
 protected:
+    /// Default constructor is unusable
     device_tty():tty_path(""){ fd=-1; }
     
 public:
-    
+    /// Construct tty from device path
 	device_tty(std::string _path);
     
+    /// Construct tty from device path
     device_tty(const char* _path):device_tty(std::string(_path))
     {}
+    
+    /// Destroy the tty
     ~device_tty(){ close(fd); }
     
+    
+    /** Read a specific number of bytes and hold while amount received is less
+     \param     num_bytes   The number of bytes to read.
+     \return    uint8_t*    Pointer to a \c new array of bytes that was read.
+     The reading is 'sleepy' because the function sleeps a calculated duration 
+     based on \c tty_config::pkt_lag and number of bytes remaining. At most, it 
+     should take \c (pkt_lag*num_bytes) to read.
+     */
     uint8_t *   sleepy_read(size_t num_bytes);
-   
+    
+    /** Continually read until \c num bytes have been received.
+     \return    uint8_t*    An \c new array of [num] bytes as read. 
+     */
     uint8_t*    rd_(size_t num);
     
+    /// Read 1 byte and return it.
     uint8_t     rd_();
     
+    
+    /** Write to the tty.
+     \param     val     The value to write; must have \c operator<<() defined.
+     */
     template <class _type>
     void        wr_(_type val)
     {

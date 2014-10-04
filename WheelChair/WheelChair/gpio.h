@@ -16,6 +16,7 @@
 
 #include <mutex>
 #include <atomic>
+#include <unistd.h>
 
 
 #include "formatting.h"
@@ -64,7 +65,7 @@ class gpio
     
 public:
     /// Constructor
-    gpio(u_int _number);
+    gpio(unsigned number);
     /// Copy constructor
     gpio(gpio & _g);
     

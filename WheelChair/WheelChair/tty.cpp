@@ -52,7 +52,7 @@ device_tty::rd_(size_t num)
 }
 
 uint8_t
-device_tty::rd_(){ return rd_(1)[0];    }
+device_tty::rd_(){ uint8_t *t= rd_(1),ret=t[0];   delete t;   return ret;  }
 
 
 

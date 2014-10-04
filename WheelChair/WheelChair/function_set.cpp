@@ -13,11 +13,6 @@
 #include <cassert>
 #include <sstream>
 
-
-//#include <boost/format.hpp>
-//#include <boost/algorithm/string.hpp>
-
-//namespace b_ = boost;
 using namespace std;
 
 /* ************************     function_sig       **************************** */
@@ -37,21 +32,20 @@ string
 function_sig::help_short() const 
 {   
 //    return b_::str(b_::format("\t[ %1% %2% ]\n") %name %args );
-    return stringf("\t[ %s %s ]\n",name.c_str() ,args.c_str() );
+    return stringf("\n\t[ %s %s ]",name.c_str() ,args.c_str() );
 }
 
 string  
 function_sig::help_long() const 
 {   
-//    return b_::str(b_::format("\t[ %1% %2% ]\n\t: %3%\n") %name %args %desc );
-//    return stringf("\t[ %s %s ]\n\t: %s \n", 
-//                   name.c_str(), args.c_str(), desc.c_str() );
     string d = desc,  s=help_short();
-    for(size_t p1=0,p2=0; p1!=string::npos; p1=d.find('\n', p1)){
-        if((p1-p2)>60){ p2=d.rfind(' ',p2+60); d.replace(p2, 1, "\n "); p1=p2; }
+    for(size_t p1=0,p2=0; (p1=d.find('\n', p1))!=string::npos; ){
+        if((p1-p2)>60){ 
+            p2=d.rfind(' ',p2+60); d.replace(p2, 1, "\n "); p1=p2; 
+        }
         d.replace(p1, 1,  "\n\t: ");  p1+=4;  p2=p1;
     }
-    return s+"\b"+d+"\n";
+    return s+"\n\t: "+d+"\n";
 }
 
 string 
@@ -91,9 +85,9 @@ function_set::operator[](std::string  _name)
     function_sig _f ({ "","", "", [&](param_t p)->ret_t{}});
     _f.name = _name;
     auto foundit = find(_f);
-    assert(foundit!=end() && "Function name not found.");
+    //  assert(foundit!=end() && "Function name not found.");
     if (foundit == end()) {    
-        throw std::invalid_argument::invalid_argument
+        throw std::invalid_argument
         ("Function:[\""+_name+"\"] not found in function set.");
     }
     return (*foundit);
@@ -106,11 +100,13 @@ function_set::parse(std::stringstream & args)
         if (default_function){  default_function( args );  }
         return -1;
     }else{
-        do{
-            std::string fnct_name;
+        std::string fnct_name;
+        args >> fnct_name;
+        while (!fnct_name.empty()){ 
+            (*this)[fnct_name]( std::ref(args) );   fnct_name.clear();
             args >> fnct_name;
-            (*this)[fnct_name]( args );
-        }while (!args.str().empty()) ;
+        }
+        
     }
     return 0;
 }
