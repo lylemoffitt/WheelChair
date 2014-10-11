@@ -129,7 +129,7 @@ do{                         \
  * @param 	a Any evaluatable expression 
  * @return  LOUT "\t" STR( a ) " = " << a << "\t"
  */
-#define SHOW( a )			\
+#define ECHO( a )			\
 LOUT STR( a ) " = " << a    \
 
 

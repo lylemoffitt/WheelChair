@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "26526FE219D472D6004A5E15"
-               BuildableName = "WheelChair"
-               BlueprintName = "WheelChair"
+               BlueprintIdentifier = "26706E6819E4E58800F3085A"
+               BuildableName = "GPIO Utility"
+               BlueprintName = "GPIO Utility"
                ReferencedContainer = "container:WheelChair.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "26526FE219D472D6004A5E15"
-            BuildableName = "WheelChair"
-            BlueprintName = "WheelChair"
+            BlueprintIdentifier = "26706E6819E4E58800F3085A"
+            BuildableName = "GPIO Utility"
+            BlueprintName = "GPIO Utility"
             ReferencedContainer = "container:WheelChair.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -51,20 +51,24 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "26526FE219D472D6004A5E15"
-            BuildableName = "WheelChair"
-            BlueprintName = "WheelChair"
+            BlueprintIdentifier = "26706E6819E4E58800F3085A"
+            BuildableName = "GPIO Utility"
+            BlueprintName = "GPIO Utility"
             ReferencedContainer = "container:WheelChair.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "--kill-after 20"
+            argument = "--find"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--test-gpio-bus 1 2 3 4 1.0"
+            argument = "--read"
             isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "help"
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>
@@ -79,9 +83,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "26526FE219D472D6004A5E15"
-            BuildableName = "WheelChair"
-            BlueprintName = "WheelChair"
+            BlueprintIdentifier = "26706E6819E4E58800F3085A"
+            BuildableName = "GPIO Utility"
+            BlueprintName = "GPIO Utility"
             ReferencedContainer = "container:WheelChair.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

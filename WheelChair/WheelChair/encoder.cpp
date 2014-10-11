@@ -11,7 +11,7 @@
 #include <algorithm>
 #include <cassert>
 
-#define MULTITHREAD_GPIO //Use to enable multi-threaded reading from the GPIOs
+//#define MULTITHREAD_GPIO //Use to enable multi-threaded reading from the GPIOs
 
 #ifdef MULTITHREAD_GPIO
     #define GET( _gpio_ ) ( _gpio_.get_mt() ) 
@@ -57,7 +57,7 @@ encoder::~encoder()
 const short 
 encoder::poll(const size_t number)
 {
-    std::bitset<B_WID>	curr = GET(pins);
+    std::bitset<ENC_WIDTH>	curr = GET(pins);
     for (size_t i=0; i<number; ++i) {
         auto tmp = GET(pins);
         if (tmp != curr) {  curr=tmp; break; }

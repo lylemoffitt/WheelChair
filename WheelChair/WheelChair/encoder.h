@@ -41,7 +41,7 @@ class encoder
     std::atomic_bool        kill_runner;
     
     /// The pins to which the encoder is connected
-    gpio_bus                pins;
+    gpio_bus<ENC_WIDTH>     pins;
     
     /// The number of times to read from the bus before we accept the new number
     size_t                  polling_period;

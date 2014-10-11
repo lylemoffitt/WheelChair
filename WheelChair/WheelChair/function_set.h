@@ -16,7 +16,7 @@
 #include <functional>
 #include <unordered_set>
 
-
+#define WRAP_MARGIN 80
 
 /// The return type of the function binding.
 typedef void                     ret_t;     

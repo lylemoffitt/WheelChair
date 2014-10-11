@@ -12,6 +12,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include <cassert>
+#include <cmath>
 
 #include "function_set.h"
 #include "tty.h"
@@ -22,15 +23,17 @@
 using namespace std;
 
 // Global values
-device_tty      * xbee;
+device_tty              * xbee;
 
-encoder         * enc_left,   
-                * enc_right;
+encoder                 * enc_left,   
+                        * enc_right;
 
-deque<delta>    * delta_left, 
-                * delta_right;
+deque<delta>            * delta_left, 
+                        * delta_right;
 
-mapper          * gps;
+mapper                  * gps;
+
+gpio_bus<ENC_WIDTH>     * pin_bus;
 
 int main(int argc, const char * argv[])
 {
@@ -54,13 +57,13 @@ int main(int argc, const char * argv[])
 \* ************************************************************************** */
     args_handler.insert
     ({
-        {"--new-encoder","<pin#> <pin#> <pin#> <L|R>",
+        {"--new-encoder","<pin#1> <pin#2> <pin#3> <pin#4> <L|R>",
             "Constructs an encoder (on the left or right) with the supplied "
             "3 pin #'s.",
             [&](param_t p)
             {  
-                int pin1(0), pin2(0), pin3(0);
-                p.get() >> pin1 >> pin2 >> pin3;
+                int pin1(0), pin2(0), pin3(0), pin4(0);
+                p.get() >> pin1 >> pin2 >> pin3 >> pin4;
                 string side;
                 p.get() >> side;
                 
@@ -68,10 +71,10 @@ int main(int argc, const char * argv[])
                 
                 switch (side[0]) {
                     case 'L':
-                        enc_left    = new encoder({pin1,pin2,pin3});
+                        enc_left    = new encoder({pin1,pin2,pin3,pin4});
                         break;
                     case 'R':
-                        enc_right   = new encoder({pin1,pin2,pin3});
+                        enc_right   = new encoder({pin1,pin2,pin3,pin4});
                         break;
                         
                     default:
@@ -243,6 +246,24 @@ int main(int argc, const char * argv[])
                        "Cannot map without constructed encoders.");
                 gps->update(*delta_left, *delta_right);
             }
+        },
+        {"--test-gpio-bus","<pin#1> <pin#2> <pin#3> <pin#4> <float lag>",
+            "Constructs a gpio_bus from the pins and reads from it continually.",
+            [&](param_t p)
+            {  
+                int pin1(0), pin2(0), pin3(0), pin4(0);
+                double lag;
+                p.get() >> pin1 >> pin2 >> pin3 >> pin4 >> lag;
+                
+                assert(pin1&&pin2&&pin3&&pin4 && 
+                       "Must supply 4 valid pin numbers.");
+                pin_bus = new gpio_bus<4>( {pin1,pin2,pin3,pin4} );
+                
+                for (long i=0; i<iteration_limit; ++i) {
+                    cout << pin_bus->get().to_string() << endl;
+                    usleep(round(lag*1e6));
+                }
+            }
         }
     });
     
@@ -260,7 +281,7 @@ int main(int argc, const char * argv[])
     // Read arguments from main params
     args_handler.parse(argc-1, argv+1);
     
-    
+#if 0    
 /* ************************************************************************** *\
     Check and assign defaults
 \* ************************************************************************** */
@@ -290,7 +311,7 @@ int main(int argc, const char * argv[])
     Execute
 \* ************************************************************************** */
     write_f(_ss);
-    
+#endif  
     return 0;
 }
 
